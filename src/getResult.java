@@ -36,7 +36,10 @@ public class getResult {
 				Matcher m=p.matcher(r);
 				if (m.matches()) {
 					while (m.matches() && once) {
-						System.out.println(m.group(3));
+						String t=m.group(3);
+						if (t.charAt(0)!='<')
+							System.out.println(t);
+						else { System.out.println(word + " does not exists in youdao dict."); once=false; }
 						r=out.nextLine();
 						m=p.matcher(r);
 					}
