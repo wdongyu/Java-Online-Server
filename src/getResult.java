@@ -17,8 +17,13 @@ public class getResult {
 		URL url=null;
 		try {
 			input =new java.util.Scanner(System.in);
-			String word=input.next();
+			String word=input.nextLine();
 			
+			//String[] t=word.split(" ");
+			//word=t[0];
+			//for (int i=1; i<t.length; i++) word=word+"%20" + t[i];
+			word=word.replaceAll("\\s", "%20");
+			//System.out.println(word);
 			url=new URL("http://www.youdao.com/w/" + word + "/");
 			
 			out= new java.util.Scanner(url.openStream());
