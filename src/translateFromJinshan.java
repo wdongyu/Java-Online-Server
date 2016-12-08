@@ -9,7 +9,7 @@ public class translateFromJinshan implements Runnable{
 	private String path;
 	private Pattern p;
 	private Matcher m;
-	public String result="Jinshan:\n";
+	public String result="\nJinshan:\n";
 	private final int NUM_OF_INTER=5;
 	private final int NUM_OF_SENTENCE=3;
 	

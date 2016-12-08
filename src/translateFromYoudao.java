@@ -11,7 +11,7 @@ public class translateFromYoudao implements Runnable{
 	private Pattern p;
 	private Matcher m;
 	private final int NUM_OF_PHRASE=3;
-	public String result="Youdao:\n";
+	public String result="\nYoudao:\n";
 	
 	public translateFromYoudao(String query) {
 		this.query=query;
