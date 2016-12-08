@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.concurrent.*;
 
 public class getResult {
 	
@@ -13,7 +14,15 @@ public class getResult {
 	}
 	
 	public getResult() {
-		java.util.Scanner input=null,out1=null,out2=null,out3=null;
+		java.util.Scanner input=new java.util.Scanner(System.in);
+		String query=input.nextLine();
+		ExecutorService executor=Executors.newFixedThreadPool(3);
+		
+		//executor.execute(new translateFromJinshan(query));
+		executor.execute(new translateFromYoudao(query));
+		
+		executor.shutdown();
+		/*java.util.Scanner input=null,out1=null,out2=null,out3=null;
 		URL url1=null,url2=null,url3=null;
 		try {
 			input =new java.util.Scanner(System.in);
@@ -45,7 +54,7 @@ public class getResult {
 					once=false;
 				}
 				//System.out.println(r);
-			}*/
+			}
 			
 			url2=new URL("http://www.iciba.com/" + word);	
 			out2= new java.util.Scanner(url2.openStream());
@@ -90,6 +99,6 @@ public class getResult {
 		}
 		finally {
 			if (input!=null) input.close();
-		}
+		}*/
 	}
 }
