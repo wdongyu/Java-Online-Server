@@ -11,6 +11,7 @@ public class translateFromYoudao implements Runnable{
 	private Pattern p;
 	private Matcher m;
 	private final int NUM_OF_PHRASE=3;
+	public String result="Youdao:\n";
 	
 	public translateFromYoudao(String query) {
 		this.query=query;
@@ -20,53 +21,14 @@ public class translateFromYoudao implements Runnable{
 		java.util.Scanner out=null,tempOut=null;
 		URL url=null;
 		try {
-			//input =new java.util.Scanner(System.in);
-			//String word=input.nextLine();
-			//word=word.replaceAll("\\s", "%20");
-			
 			query=query.replaceAll("\\s", "%20");
 			url=new URL("http://www.youdao.com/w/" + query + "/");	
 			out= new java.util.Scanner(url.openStream());
 			tempOut=new java.util.Scanner(url.openStream());
-			//InputStreamReader inputStreamReader = new InputStreamReader(url.openStream(), "utf-8");  
-			//BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-			
-			/*StringBuffer buffer = new StringBuffer();  
-			String str = null;  
-			while (out.hasNext()) {
-				str=out.next();
-				buffer.append(str);  
-			}
-			str=buffer.toString();
-			//System.out.println(str);
-
-			//匹配单词解释
-			p=Pattern.compile("(.*)(</h2>)(.*?)(</ul>)(.*)");
-			m=p.matcher(str);
-			if (m.matches()) {
-				String temp=m.group(3);
-				System.out.println(m.group(3));
-				p=Pattern.compile("(<li>)(.*?)(</li>)");
-			    m=p.matcher(temp);
-			    while(m.find()) {
-			    	System.out.println(m.group(2));
-			    }
-			}
-			
-			//匹配短语解释
-			p=Pattern.compile("(.*)(<divid=\"transformToggle\">)(.*?)(<divclass=\"more\">)(.*)");
-			m=p.matcher(str);
-			if (m.matches()) {
-				String temp=m.group(3);
-				p=Pattern.compile("(<.*>)(.*?)(</a></span>)(.*?)(/p)");
-			    m=p.matcher(temp);
-			    while(m.find()) {
-			    	System.out.println(m.group(2) + " " + m.group(4));
-			    }
-				//System.out.println(m.group(3));
-			}*/
 			boolean once=true;
-			System.out.println("\nYoudao:");
+			int count=0;
+			//System.out.println("\nYoudao:");
+			//result=result+"\nYoudao:\n";
 			
 			//匹配单词解释
 			while (out.hasNext()) {
@@ -77,7 +39,8 @@ public class translateFromYoudao implements Runnable{
 					while (m.matches() && once) {
 						String t=m.group(3);
 						if (t.charAt(0)!='<')
-							System.out.println(t);
+							//System.out.println(t);
+							result=result + t + "\n";
 						else { System.out.println(query + " does not exists in youdao dict."); once=false; }
 						r=out.nextLine();
 						m=p.matcher(r);
@@ -86,21 +49,7 @@ public class translateFromYoudao implements Runnable{
 					break;
 				}
 			}
-			
-			//匹配句子
-			int count=0;
-			while (out.hasNext()) {
-				String r=out.nextLine();
-				p=Pattern.compile("(.*)(<p class=\"additional\">)(.*?)(</p>)(.*)");
-				m=p.matcher(r);
-				//System.out.println(r);
-				if (m.matches() && count<2*NUM_OF_PHRASE+1) {
-					if (m.group(3).charAt(0)!='<') 
-						System.out.println(m.group(3));
-					count++;
-				}
-				if (count==2*NUM_OF_PHRASE+1) break;
-			}
+			//result=result + "\n";
 			
 			//匹配短语解释
 			while (tempOut.hasNext()) {
@@ -115,14 +64,33 @@ public class translateFromYoudao implements Runnable{
 					p=Pattern.compile("(.*)(>)(.*?)(</a>)(.*)");
 					m=p.matcher(r);
 					if (m.matches()) {
-						System.out.print("\n" + m.group(3));
+						//System.out.print("\n" + m.group(3));
+						result=result + "\n" + m.group(3);
 						r=tempOut.nextLine();
-						System.out.print(" " + r.trim());
+						//System.out.print(" " + r.trim());
+						result=result + " " + r.trim();
 					}
 					r=tempOut.nextLine();
 					count++;
 				}
 				if (count!=0) break;
+			}
+			result=result + "\n";
+			
+			//匹配句子
+			count=0;
+			while (out.hasNext()) {
+				String r=out.nextLine();
+				p=Pattern.compile("(.*)(<p class=\"additional\">)(.*?)(</p>)(.*)");
+				m=p.matcher(r);
+				//System.out.println(r);
+				if (m.matches() && count<2*NUM_OF_PHRASE+1) {
+					if (m.group(3).charAt(0)!='<') 
+						//System.out.println(m.group(3));
+						result=result + "\n" + m.group(3);
+					count++;
+				}
+				if (count==2*NUM_OF_PHRASE+1) break;
 			}
 			
 		}
@@ -133,6 +101,7 @@ public class translateFromYoudao implements Runnable{
 			System.out.println(e.getMessage());
 		}
 		finally {
+			System.out.print(result);
 			if (out!=null) out.close();
 		}
 	}
