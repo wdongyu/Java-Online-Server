@@ -18,8 +18,9 @@ public class getResult {
 		String query=input.nextLine();
 		ExecutorService executor=Executors.newFixedThreadPool(3);
 		
-		executor.execute(new translateFromJinshan(query));
+		//executor.execute(new translateFromJinshan(query));
 		//executor.execute(new translateFromYoudao(query));
+		executor.execute(new translateFromHaici(query));
 		
 		executor.shutdown();
 		/*java.util.Scanner input=null,out1=null,out2=null,out3=null;
