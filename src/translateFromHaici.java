@@ -1,10 +1,11 @@
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class translateFromHaici implements Runnable{
+public class translateFromHaici implements Callable<String>{
 	private String query;
 	private String path;
 	private Pattern p;
@@ -17,7 +18,8 @@ public class translateFromHaici implements Runnable{
 		this.query=query;
 	}
 	
-	public void run() {
+	//public void run() {
+	public String call() {
 		java.util.Scanner out=null;
 		URL url=null;
 		try {
@@ -140,8 +142,9 @@ public class translateFromHaici implements Runnable{
 			System.out.println(e.getMessage());
 		}
 		finally {
-			System.out.print(result);
+			//System.out.print(result);
 			if (out!=null) out.close();
+			return result;
 		}
 	}
 }
