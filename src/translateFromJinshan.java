@@ -1,15 +1,16 @@
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class translateFromJinshan implements Runnable{
+public class translateFromJinshan implements Callable<String>{
 	private String query;
 	private String path;
 	private Pattern p;
 	private Matcher m;
-	public String result="Jinshan:\n";
+	public String result="\nJinshan:\n";
 	private final int NUM_OF_INTER=5;
 	private final int NUM_OF_SENTENCE=3;
 	
@@ -17,7 +18,8 @@ public class translateFromJinshan implements Runnable{
 		this.query=query;
 	}
 	
-	public void run() {
+	//public void run() {
+	public String call() {
 		java.util.Scanner out=null;
 		URL url=null;
 		try {
@@ -122,8 +124,9 @@ public class translateFromJinshan implements Runnable{
 			System.out.println(e.getMessage());
 		}
 		finally {
-			System.out.print(result);
+			//System.out.print(result);
 			if (out!=null) out.close();
+			return result;
 		}
 	}
 }

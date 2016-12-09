@@ -1,23 +1,23 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class translateFromYoudao implements Runnable{
+public class translateFromYoudao implements Callable<String>{
 	private String query;
 	private Pattern p;
 	private Matcher m;
 	private final int NUM_OF_PHRASE=3;
-	public String result="Youdao:\n";
+	public String result="\nYoudao:\n";
 	
 	public translateFromYoudao(String query) {
 		this.query=query;
 	}
 	
-	public void run() {
+	//public void run() {
+	public String call() {
 		java.util.Scanner out=null,tempOut=null;
 		URL url=null;
 		try {
@@ -101,8 +101,9 @@ public class translateFromYoudao implements Runnable{
 			System.out.println(e.getMessage());
 		}
 		finally {
-			System.out.print(result);
+			//System.out.print(result);
 			if (out!=null) out.close();
+			return result;
 		}
 	}
 }
