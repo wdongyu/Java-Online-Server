@@ -2,7 +2,14 @@ import java.sql.*;
 import java.util.*;
 
 public class connectToDB {
-	public static void main(String[] args) {
+	private String query;
+	private ResultSet resultSet;
+	
+	public connectToDB(String query) {
+		this.query=query;
+	}
+	
+	public ResultSetMetaData getMetaData() { 
 		String driverName="com.microsoft.sqlserver.jdbc.SQLServerDriver";
 		String dbURL="jdbc:sqlserver://localhost:1433;DatabaseName=java_db";
 		String userName="java";
@@ -16,9 +23,8 @@ public class connectToDB {
 			
 			Statement statement=dbCon.createStatement();
 			String showResult="select * from UserData";
-			ResultSet resultSet;
-			Scanner input=new Scanner(System.in);
-			String query=input.nextLine();
+			//Scanner input=new Scanner(System.in);
+			//String query=input.nextLine();
 			
 			/* 判断属于哪种语句 */
 			String[] tokens=query.split(" ");
@@ -28,18 +34,28 @@ public class connectToDB {
 				statement.executeUpdate(query);
 				resultSet=statement.executeQuery(showResult);
 			}
-			ResultSetMetaData rsmd=resultSet.getMetaData();
+			/*ResultSetMetaData rsmd=resultSet.getMetaData();
 			while (resultSet.next()) {
 				for (int i=1; i<=rsmd.getColumnCount();i++) {
 					System.out.print(resultSet.getString(i) + "\t");
 				}
 				System.out.println();
-			}
+			}*/
 			
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 			//System.out.println("连接失败");
 		}
+		finally {
+			try {
+				return resultSet.getMetaData();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
 		}
 }
 
