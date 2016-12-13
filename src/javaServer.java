@@ -8,7 +8,7 @@ public class javaServer {
 	
 	public javaServer() {
 		try {
-			ServerSocket serverSocket=new ServerSocket(9877);
+			ServerSocket serverSocket=new ServerSocket(9875);
 			System.out.println("Server started ");
 			
 			int clientNo=1;

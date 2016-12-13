@@ -7,15 +7,20 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.concurrent.*;
 
-public class getResult {
+public class getResult implements Callable<String>{
+	private String query;
+	//public static void main(String[] args) throws InterruptedException, ExecutionException {
+		//new getResult();
+	//}
 	
-	public static void main(String[] args) throws InterruptedException, ExecutionException {
-		new getResult();
+	public getResult(String query) {
+		this.query=query;
 	}
 	
-	public getResult() throws InterruptedException, ExecutionException {
-		java.util.Scanner input=new java.util.Scanner(System.in);
-		String query=input.nextLine();
+	//public getResult() throws InterruptedException, ExecutionException {
+		//java.util.Scanner input=new java.util.Scanner(System.in);
+		//String query=input.nextLine();
+	public String call() throws InterruptedException, ExecutionException {
 		ExecutorService executor=Executors.newFixedThreadPool(3);
 		translateFromJinshan t1=new translateFromJinshan(query);
 		translateFromYoudao t2=new translateFromYoudao(query);
@@ -33,7 +38,7 @@ public class getResult {
 		Future<String> f3=executor.submit(t3);
 
 		executor.shutdown();
-		System.out.println(f1.get() +  f2.get() + f3.get());
-		input.close();
+		return f1.get()+f2.get()+f3.get();
+		//System.out.println(f1.get() +  f2.get() + f3.get());
 	}
 }
