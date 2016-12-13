@@ -1,8 +1,10 @@
 import java.net.*;
 import java.io.*;
 
-public class HandleAClient {
+public class HandleAClient implements Runnable{
 	private Socket socket;
+	ObjectInputStream inputFromClient;
+	ObjectOutputStream outputToClient;
 	
 	public HandleAClient(Socket socket) {
 		this.socket=socket;
@@ -10,24 +12,24 @@ public class HandleAClient {
 	
 	public void run() {
 		try {
-			ObjectInputStream inputFromClient=new ObjectInputStream(socket.getInputStream());
-			ObjectOutputStream outputToClient=new ObjectOutputStream(socket.getOutputStream());
+			inputFromClient=new ObjectInputStream(socket.getInputStream());
+			outputToClient=new ObjectOutputStream(socket.getOutputStream());
 			
-			while (true) {
+			//while (true) {
 				Object src=inputFromClient.readObject();
-				Object result=getResult(src);
-				outputToClient.writeObject(result);
-			}
+				if (src!=null && src instanceof tokens) 
+					System.out.println(((tokens)src).getType() + " " + (((tokens)src).getContent())[0]);
+				outputToClient.writeObject(src);
+			//}
 		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-		catch (ClassNotFoundException e) {
+		catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public Object getResult(Object src) {
-		return src;
+	public tokens handleSrc(tokens src) {
+		String[] s=new String[1];
+		s[0]="hello!!!";
+		return new tokens(2,s);
 	}
 }

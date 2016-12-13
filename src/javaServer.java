@@ -8,7 +8,7 @@ public class javaServer {
 	
 	public javaServer() {
 		try {
-			ServerSocket serverSocket=new ServerSocket(8000);
+			ServerSocket serverSocket=new ServerSocket(9877);
 			System.out.println("Server started ");
 			
 			int clientNo=1;
@@ -26,22 +26,12 @@ public class javaServer {
 				
 				clientNo++;
 			}
-		}
-		catch (ClassNotFoundException ex) {
-			ex.printStackTrace();
+			//serverSocket.close();
 		}
 		catch (IOException ex) {
 			ex.printStackTrace();
 		}
 		finally {
-			try {
-				inputFromClient.close();
-				outputToDB.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 		}
 	}
 }
