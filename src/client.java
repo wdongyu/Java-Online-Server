@@ -12,14 +12,16 @@ public class client {
 			ObjectOutputStream toServer=new ObjectOutputStream(socket.getOutputStream());
 			
 			while (input.hasNext()) {
-				int type=3;
-				String[] s=new String[1];
+				int type=2;
+				String[] s=new String[2];
+				//type=input.nextInt();
 				s[0]=input.nextLine();
+				s[1]=input.nextLine();
 				toServer.writeObject(new tokens(type,s));
 				toServer.flush();
 				//socket.close();
 				//String s=(String)fromServer.readObject();
-				System.out.println(s[0]);
+				System.out.println(s[0] + " " + s[1]);
 			}
 		}
 		catch (IOException ex) {

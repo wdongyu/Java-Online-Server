@@ -2,33 +2,44 @@ import java.sql.*;
 import java.util.*;
 
 public class connectToDB {
-	private String query;
-	private ResultSet resultSet;
+	//private String query;
+	private ResultSet resultSet=null;
+	Connection dbCon;
 	
-	public connectToDB(String query) {
-		this.query=query;
+	public connectToDB() {
+		try {
+			String driverName="com.microsoft.sqlserver.jdbc.SQLServerDriver";
+			String dbURL="jdbc:sqlserver://localhost:1433;DatabaseName=java_db";
+			String userName="java";
+			String userPwd="java";
+			Class.forName(driverName);
+			dbCon=DriverManager.getConnection(dbURL,userName,userPwd);
+		} 
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("连接数据库成功");
+		//this.query=query;
 	}
 	
-	public ResultSetMetaData getMetaData() { 
-		String driverName="com.microsoft.sqlserver.jdbc.SQLServerDriver";
-		String dbURL="jdbc:sqlserver://localhost:1433;DatabaseName=java_db";
-		String userName="java";
-		String userPwd="java";
-		
+	public ResultSet getResultSet(String query, int chooseDB) { 
 		try {
-			Class.forName(driverName);
-			Connection dbCon=DriverManager.getConnection(dbURL,userName,userPwd);
-			System.out.println("连接数据库成功");
-			//dbCon.close();
-			
 			Statement statement=dbCon.createStatement();
-			String showResult="select * from UserData";
+			String showResult;
+			if (chooseDB==1)
+				showResult="select * from UserData";
+			else
+				showResult="select * from PraiseCount";
 			//Scanner input=new Scanner(System.in);
 			//String query=input.nextLine();
 			
 			/* 判断属于哪种语句 */
-			String[] tokens=query.split(" ");
-			if (tokens[0].equalsIgnoreCase("select"))
+			String[] token=query.split(" ");
+			if (token[0].equalsIgnoreCase("select"))
 				resultSet=statement.executeQuery(query);
 			else {
 				statement.executeUpdate(query);
@@ -48,14 +59,8 @@ public class connectToDB {
 			//System.out.println("连接失败");
 		}
 		finally {
-			try {
-				return resultSet.getMetaData();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			return resultSet;
 		}
-		return null;
 		}
 }
 
