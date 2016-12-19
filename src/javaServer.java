@@ -1,7 +1,11 @@
 import java.io.*;
 import java.net.*;
+import java.util.*;
 
+@SuppressWarnings("resource")
 public class javaServer {
+	public static Map<String,Socket> map=Collections.synchronizedMap(new HashMap<String,Socket>());
+	
 	public static void main(String[] args) {
 		new javaServer();
 	}
@@ -15,6 +19,7 @@ public class javaServer {
 			
 			while (true) {
 				Socket socket=serverSocket.accept();
+				//map.put(null, socket);
 				System.out.println("Starting thread for client " + clientNo);
 				
 				InetAddress inetAddress=socket.getInetAddress();

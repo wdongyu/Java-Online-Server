@@ -12,24 +12,25 @@ public class client {
 			ObjectOutputStream toServer=new ObjectOutputStream(socket.getOutputStream());
 			
 			while (input.hasNext()) {
-				int type=2;
+				int type=5;
 				String[] s=new String[2];
 				//type=input.nextInt();
 				s[0]=input.nextLine();
 				s[1]=input.nextLine();
-				toServer.writeObject(new tokens(type,s));
+				toServer.writeObject(new Tokens(type,s));
 				toServer.flush();
 				//socket.close();
 				//String s=(String)fromServer.readObject();
-				System.out.println(s[0] + " " + s[1]);
+				System.out.println(s[0]);
+				//Object t=fromServer.readObject();
 			}
 		}
 		catch (IOException ex) {
 			ex.printStackTrace();
 		} 
-		/*catch (ClassNotFoundException e) {
+		//catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+			//e.printStackTrace();
+		//}
 	}
 }

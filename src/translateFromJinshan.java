@@ -10,7 +10,7 @@ public class translateFromJinshan implements Callable<String>{
 	private String path;
 	private Pattern p;
 	private Matcher m;
-	public String result="\nJinshan:\n";
+	public String result="";
 	private final int NUM_OF_INTER=5;
 	private final int NUM_OF_SENTENCE=3;
 	

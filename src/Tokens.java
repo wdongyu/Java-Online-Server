@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class tokens implements Serializable{
+public class Tokens implements Serializable{
 	/* 1：注册	用户名，密码 	
 	   2：登陆 	用户名，密码
 	   3：查词	单词，选择渠道(针对查询返回)
@@ -9,7 +9,7 @@ public class tokens implements Serializable{
 	private int type;
 	private String[] content;
 	
-	public tokens(int type, String[] content) {
+	public Tokens(int type, String[] content) {
 		this.type=type;
 		this.content=content;
 	}

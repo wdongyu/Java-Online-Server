@@ -10,7 +10,7 @@ public class translateFromYoudao implements Callable<String>{
 	private Pattern p;
 	private Matcher m;
 	private final int NUM_OF_PHRASE=3;
-	public String result="\nYoudao:\n";
+	public String result="";
 	
 	public translateFromYoudao(String query) {
 		this.query=query;

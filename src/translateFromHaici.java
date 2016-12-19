@@ -10,7 +10,7 @@ public class translateFromHaici implements Callable<String>{
 	private String path;
 	private Pattern p;
 	private Matcher m;
-	public String result="\nHaici:\n";
+	public String result="";
 	private final int NUM_OF_PHRASE=3;
 	private final int NUM_OF_SENTENCE=3;
 	
