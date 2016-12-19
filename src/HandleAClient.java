@@ -123,12 +123,23 @@ public class HandleAClient implements Runnable{
 		}
 		case 5: {
 			synchronized (javaServer.map) {
-				Socket dstSocket=javaServer.map.get(s[0]);
 				System.out.println(javaServer.map);
-				//outputToClient=new ObjectOutputStream(dstSocket.getOutputStream());
-				//outputToClient.writeObject(src);
-				//ObjectOutputStream outputToAnotherClient=new ObjectOutputStream(dstSocket.getOutputStream());
+				/* 保存单词卡信息 */
+				javaServer.imageSave.put(s, username);
+			}
+			break;
+		}
+		case 6: {
+			synchronized (javaServer.imageSave) {
 				/* 发送单词卡信息 */
+				Set<Map.Entry<String[], String>> entryset=javaServer.imageSave.entrySet();
+				for (Map.Entry<String[], String> entry: entryset) {
+					if (entry.getValue().equals(username)) {
+						Socket dstSocket=javaServer.map.get(username);
+						outputToClient=new ObjectOutputStream(dstSocket.getOutputStream());
+						outputToClient.writeObject(new Tokens(6,entry.getKey()));
+					}
+				}
 			}
 			break;
 		}

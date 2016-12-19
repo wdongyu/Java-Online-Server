@@ -5,6 +5,7 @@ import java.util.*;
 @SuppressWarnings("resource")
 public class javaServer {
 	public static Map<String,Socket> map=Collections.synchronizedMap(new HashMap<String,Socket>());
+	public static Map<String[],String> imageSave=Collections.synchronizedMap(new HashMap<String[],String>());
 	
 	public static void main(String[] args) {
 		new javaServer();
